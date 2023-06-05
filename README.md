@@ -15,6 +15,9 @@ Os requisitos para este desafio são:
 ## Usage
 
 ```bash
+export APICEP_URL="https://cdn.apicep.com/file/apicep"
+export VIACEP_URL="http://viacep.com.br/ws"
+export API_TIMEOUT_MS="1"
 go run main.go
 ```
 Será solicitado o CEP a ser consultado via commandline<br/>

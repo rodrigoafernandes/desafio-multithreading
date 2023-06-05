@@ -4,13 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/rodrigoafernandes/desafio-multithreading/config"
 	"net/http"
 	"strings"
 	"time"
 )
 
 func main() {
-	Setup()
+	config.SetupApp()
 	fmt.Print("Informe o CEP a pesquisar(Utilize o formato 00000-000. Exemplo: 03977-250): ")
 	var cep string
 	fmt.Scanln(&cep)
@@ -18,8 +19,8 @@ func main() {
 	if len(strings.TrimSpace(cep)) != 9 || strings.Compare("00000-000", cep) == 0 {
 		panic(fmt.Sprintf("O cep informado é inválido: %s", cep))
 	}
-	apiCepUrl := fmt.Sprintf("%s/%s.json", AppCFG.ApiCepUrl, cep)
-	viaCepUrl := fmt.Sprintf("%s/%s/json", AppCFG.ViaCepUrl, cep)
+	apiCepUrl := fmt.Sprintf("%s/%s.json", config.AppCFG.ApiCepUrl, cep)
+	viaCepUrl := fmt.Sprintf("%s/%s/json", config.AppCFG.ViaCepUrl, cep)
 	apiCepRequest, err := http.NewRequest("GET", apiCepUrl, nil)
 	if err != nil {
 		panic(err)
@@ -91,7 +92,7 @@ func main() {
 		message := fmt.Sprintf("resultado: %s\nApi com a resposta mais rápida: %s\n", string(b), viaCepChannelResponse.Request.Host)
 		fmt.Println(message)
 
-	case <-time.After(time.Duration(AppCFG.ApiTimeoutMS) * time.Second):
+	case <-time.After(time.Duration(config.AppCFG.ApiTimeoutMS) * time.Second):
 		fmt.Println("timeout ao consultar as apis")
 	}
 }

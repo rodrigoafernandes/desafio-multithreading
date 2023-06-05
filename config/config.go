@@ -1,4 +1,4 @@
-package main
+package config
 
 import "github.com/kelseyhightower/envconfig"
 
@@ -10,7 +10,7 @@ type AppConfig struct {
 
 var AppCFG AppConfig
 
-func Setup() {
+func SetupApp() {
 	var appConfig AppConfig
 	if err := envconfig.Process("", &appConfig); err != nil {
 		panic(err)
